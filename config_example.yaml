@@ -1,0 +1,88 @@
+# Market Monitor V2 Example Configuration
+
+# Data sources to fetch from
+sources:
+  - name: api_data
+    type: rest
+    url: https://api.example.com/data
+    headers:
+      Authorization: "Bearer your-token-here"
+      User-Agent: "market-monitor/2.0"
+    timeout: 10.0
+    incremental: true
+    incremental_field: updated_at
+    field_mapping:
+      - source_field: price
+        target_field: value
+        transform: float
+      - source_field: created
+        target_field: timestamp
+        transform: isoformat
+
+  - name: csv_file
+    type: csv
+    path: ./data/sample.csv
+    timeout: 5.0
+    field_mapping:
+      - source_field: amount
+        target_field: value
+        transform: float
+      - source_field: date
+        target_field: timestamp
+
+  - name: websocket_feed
+    type: websocket
+    url: wss://feed.example.com/ws
+    headers:
+      Authorization: "Bearer ws-token"
+    ws_duration: 5.0
+    timeout: 15.0
+    incremental: true
+    incremental_field: sequence_id
+
+  - name: graphql_api
+    type: graphql
+    url: https://api.example.com/graphql
+    query: |
+      query GetData($since: String) {
+        data(since: $since) {
+          id
+          timestamp
+          value
+          unit
+        }
+      }
+    variables:
+      limit: 100
+    timeout: 10.0
+    incremental: true
+    incremental_field: timestamp
+
+  - name: json_file
+    type: file
+    path: ./data/sample.json
+    incremental: true
+    incremental_field: id
+
+# Pipeline configuration
+output: pipeline_output.json
+max_concurrent: 5
+global_timeout: 30.0
+
+# Security settings
+allowed_hosts:
+  - api.example.com
+  - feed.example.com
+  
+allowed_output_dirs:
+  - .
+  - ./output
+  - /tmp
+
+allowed_input_dirs:
+  - .
+  - ./data
+  - /home/user/data
+
+# State file for incremental updates
+state_file: .state.json
