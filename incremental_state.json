@@ -1,0 +1,58 @@
+{
+  "sample_csv_local": {
+    "last_update": "2026-02-26T02:49:55.836493",
+    "last_record_count": 3,
+    "update_history": [
+      {
+        "timestamp": "2026-02-26T02:49:41.932964",
+        "record_count": 3
+      },
+      {
+        "timestamp": "2026-02-26T02:49:55.836493",
+        "record_count": 3
+      }
+    ]
+  },
+  "sample_json_file": {
+    "last_update": "2026-02-26T02:49:55.837128",
+    "last_record_count": 2,
+    "update_history": [
+      {
+        "timestamp": "2026-02-26T02:49:41.933292",
+        "record_count": 2
+      },
+      {
+        "timestamp": "2026-02-26T02:49:55.837128",
+        "record_count": 2
+      }
+    ]
+  },
+  "exchange_rates": {
+    "last_update": "2026-02-26T02:49:56.410515",
+    "last_record_count": 1,
+    "update_history": [
+      {
+        "timestamp": "2026-02-26T02:49:42.516983",
+        "record_count": 1
+      },
+      {
+        "timestamp": "2026-02-26T02:49:56.410515",
+        "record_count": 1
+      }
+    ]
+  },
+  "jsonplaceholder_users": {
+    "last_update": "2026-02-26T02:49:56.384922",
+    "last_record_count": 10,
+    "update_history": [
+      {
+        "timestamp": "2026-02-26T02:49:42.541351",
+        "record_count": 10
+      },
+      {
+        "timestamp": "2026-02-26T02:49:56.384922",
+        "record_count": 10
+      }
+    ]
+  }
+}

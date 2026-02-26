@@ -1,0 +1,46 @@
+2026-02-26 11:47:37,021 - __main__ - INFO - Running demo configuration
+2026-02-26 11:47:37,022 - __main__ - INFO - Starting pipeline with 4 sources
+2026-02-26 11:47:37,025 - pipeline.core - INFO - Successfully fetched 3 records from sample_csv
+2026-02-26 11:47:37,025 - pipeline.core - INFO - Successfully fetched 2 records from sample_json
+2026-02-26 11:47:37,557 - pipeline.core - INFO - Successfully fetched 250 records from countries_graphql
+2026-02-26 11:47:37,602 - pipeline.core - INFO - Successfully fetched 100 records from jsonplaceholder_posts
+2026-02-26 11:47:37,621 - pipeline.core - INFO - Results saved to pipeline_output.json
+2026-02-26 11:47:37,621 - __main__ - INFO - Pipeline completed successfully!
+2026-02-26 11:47:37,621 - __main__ - INFO - Sources: 4/4 successful
+2026-02-26 11:47:37,621 - __main__ - INFO - Records: 355
+2026-02-26 11:47:37,622 - __main__ - INFO - Execution time: 0.58s
+2026-02-26 11:47:37,622 - __main__ - INFO - Records per second: 611.06
+2026-02-26 11:49:41,929 - __main__ - INFO - Loading configuration from config_example_advanced.json
+2026-02-26 11:49:41,929 - __main__ - INFO - Starting pipeline with 5 sources
+2026-02-26 11:49:41,929 - __main__ - INFO - Incremental updates enabled
+2026-02-26 11:49:41,933 - pipeline.core - INFO - Successfully fetched 3 records from sample_csv_local
+2026-02-26 11:49:41,933 - pipeline.core - INFO - Successfully fetched 2 records from sample_json_file
+2026-02-26 11:49:41,944 - pipeline.adapters.base.crypto_api - ERROR - Failed to fetch from crypto_api: HTTP error from crypto_api: Cannot connect to host api.coindesk.com:443 ssl:default [nodename nor servname provided, or not known]
+2026-02-26 11:49:42,519 - pipeline.core - INFO - Successfully fetched 1 records from exchange_rates
+2026-02-26 11:49:42,542 - pipeline.core - INFO - Successfully fetched 10 records from jsonplaceholder_users
+2026-02-26 11:49:45,951 - pipeline.adapters.base.crypto_api - ERROR - Failed to fetch from crypto_api: HTTP error from crypto_api: Cannot connect to host api.coindesk.com:443 ssl:default [nodename nor servname provided, or not known]
+2026-02-26 11:49:49,960 - pipeline.adapters.base.crypto_api - ERROR - Failed to fetch from crypto_api: HTTP error from crypto_api: Cannot connect to host api.coindesk.com:443 ssl:default [nodename nor servname provided, or not known]
+2026-02-26 11:49:49,961 - pipeline.core - ERROR - Source error for crypto_api: HTTP error from crypto_api: Cannot connect to host api.coindesk.com:443 ssl:default [nodename nor servname provided, or not known]
+2026-02-26 11:49:49,965 - pipeline.core - INFO - Results saved to advanced_output.json
+2026-02-26 11:49:49,966 - __main__ - INFO - Pipeline completed successfully!
+2026-02-26 11:49:49,966 - __main__ - INFO - Sources: 4/5 successful
+2026-02-26 11:49:49,966 - __main__ - INFO - Records: 16
+2026-02-26 11:49:49,966 - __main__ - INFO - Execution time: 8.03s
+2026-02-26 11:49:49,966 - __main__ - INFO - Records per second: 1.99
+2026-02-26 11:49:55,833 - __main__ - INFO - Loading configuration from config_example_advanced.json
+2026-02-26 11:49:55,833 - __main__ - INFO - Starting pipeline with 5 sources
+2026-02-26 11:49:55,833 - __main__ - INFO - Incremental updates enabled
+2026-02-26 11:49:55,836 - pipeline.core - INFO - Successfully fetched 3 records from sample_csv_local
+2026-02-26 11:49:55,837 - pipeline.core - INFO - Successfully fetched 2 records from sample_json_file
+2026-02-26 11:49:55,839 - pipeline.adapters.base.crypto_api - ERROR - Failed to fetch from crypto_api: HTTP error from crypto_api: Cannot connect to host api.coindesk.com:443 ssl:default [nodename nor servname provided, or not known]
+2026-02-26 11:49:56,387 - pipeline.core - INFO - Successfully fetched 10 records from jsonplaceholder_users
+2026-02-26 11:49:56,411 - pipeline.core - INFO - Successfully fetched 1 records from exchange_rates
+2026-02-26 11:49:59,845 - pipeline.adapters.base.crypto_api - ERROR - Failed to fetch from crypto_api: HTTP error from crypto_api: Cannot connect to host api.coindesk.com:443 ssl:default [nodename nor servname provided, or not known]
+2026-02-26 11:50:03,854 - pipeline.adapters.base.crypto_api - ERROR - Failed to fetch from crypto_api: HTTP error from crypto_api: Cannot connect to host api.coindesk.com:443 ssl:default [nodename nor servname provided, or not known]
+2026-02-26 11:50:03,855 - pipeline.core - ERROR - Source error for crypto_api: HTTP error from crypto_api: Cannot connect to host api.coindesk.com:443 ssl:default [nodename nor servname provided, or not known]
+2026-02-26 11:50:03,860 - pipeline.core - INFO - Results saved to advanced_output2.json
+2026-02-26 11:50:03,860 - __main__ - INFO - Pipeline completed successfully!
+2026-02-26 11:50:03,861 - __main__ - INFO - Sources: 4/5 successful
+2026-02-26 11:50:03,861 - __main__ - INFO - Records: 16
+2026-02-26 11:50:03,861 - __main__ - INFO - Execution time: 8.02s
+2026-02-26 11:50:03,861 - __main__ - INFO - Records per second: 1.99

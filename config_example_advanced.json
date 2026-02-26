@@ -1,0 +1,53 @@
+{
+  "sources": [
+    {
+      "name": "crypto_api",
+      "type": "rest",
+      "url": "https://api.coindesk.com/v1/bpi/currentprice.json",
+      "timeout": 10.0,
+      "field_mapping": {
+        "price": "bpi.USD.rate_float",
+        "currency": "bpi.USD.code",
+        "description": "bpi.USD.description"
+      }
+    },
+    {
+      "name": "exchange_rates",
+      "type": "rest", 
+      "url": "https://api.exchangerate-api.com/v4/latest/USD",
+      "timeout": 15.0,
+      "field_mapping": {
+        "base_currency": "base",
+        "rates": "rates",
+        "last_updated": "date"
+      }
+    },
+    {
+      "name": "sample_csv_local",
+      "type": "csv",
+      "path": "./test_data/sample.csv",
+      "csv_delimiter": ",",
+      "field_mapping": {
+        "market_value": "value",
+        "market_unit": "unit",
+        "market_source": "source"
+      }
+    },
+    {
+      "name": "jsonplaceholder_users",
+      "type": "rest",
+      "url": "https://jsonplaceholder.typicode.com/users",
+      "timeout": 10.0,
+      "field_mapping": {
+        "user_name": "name",
+        "user_email": "email",
+        "user_city": "address.city"
+      }
+    },
+    {
+      "name": "sample_json_file",
+      "type": "file",
+      "path": "./test_data/sample.json"
+    }
+  ]
+}
