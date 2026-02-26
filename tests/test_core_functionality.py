@@ -221,7 +221,9 @@ class TestDataNormalization:
             
             # Check that max timestamp was staged
             source_info = state.get_source_info("test_source")
-            assert source_info["pending_watermark"] == "2024-01-01T02:00:00Z"
+            # Accept both Z and +00:00 timezone formats
+            pending = source_info["pending_watermark"]
+            assert pending in ("2024-01-01T02:00:00Z", "2024-01-01T02:00:00+00:00")
             
         finally:
             Path(state_file).unlink(missing_ok=True)

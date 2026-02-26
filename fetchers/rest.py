@@ -1,5 +1,6 @@
 """REST API fetcher with security validation."""
 
+import asyncio
 import json
 import time
 from typing import Any, Optional

@@ -99,8 +99,10 @@ class SecureClientSession:
             # Validate current URL
             await validate_url_at_connect(current_url, self.allowed_hosts)
             
-            # Make request
-            resp = await self.session.request(method, current_url, **kwargs)
+            # Make request with redirects disabled (we handle them manually)
+            resp = await self.session.request(
+                method, current_url, allow_redirects=False, **kwargs
+            )
             
             # Check if redirect
             if resp.status in (301, 302, 303, 307, 308):

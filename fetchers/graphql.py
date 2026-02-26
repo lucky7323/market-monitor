@@ -1,5 +1,6 @@
 """GraphQL fetcher with query validation and security checks."""
 
+import asyncio
 import json
 import time
 from typing import Any

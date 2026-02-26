@@ -26,9 +26,8 @@ class FileFetcher(BaseFetcher):
         try:
             file_path = self.config.path
             
-            # Validate file path (detailed runtime validation with allowed dirs 
-            # will be done by pipeline)
-            validate_file_path(file_path)
+            # Path validation with allowed_dirs is done by the pipeline.
+            # Fetcher only checks basic existence/type below.
             
             start_time = time.time()
             

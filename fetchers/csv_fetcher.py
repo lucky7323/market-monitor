@@ -1,5 +1,6 @@
 """CSV fetcher for local files and remote URLs."""
 
+import asyncio
 import csv
 import io
 import time
@@ -88,8 +89,8 @@ class CsvFetcher(BaseFetcher):
         """Fetch CSV from local file."""
         file_path = self.config.path
         
-        # Validate file path (runtime check with allowed dirs will be done by pipeline)
-        validate_file_path(file_path)
+        # Path validation with allowed_dirs is done by the pipeline.
+        # Fetcher only checks basic existence below.
         
         start_time = time.time()
         

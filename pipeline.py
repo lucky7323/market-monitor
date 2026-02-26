@@ -56,7 +56,9 @@ class Pipeline:
                 fetch_tasks = []
                 
                 for source_config in self.config.sources:
-                    task = self._fetch_source_with_semaphore(source_config, session)
+                    task = asyncio.create_task(
+                        self._fetch_source_with_semaphore(source_config, session)
+                    )
                     fetch_tasks.append(task)
                 
                 # Wait for all fetches to complete (with global timeout)
@@ -115,13 +117,7 @@ class Pipeline:
                 duplicates_removed = len(all_records) - len(merged_records)
                 self.stats_collector.set_merge_results(len(merged_records), duplicates_removed)
                 
-                # Commit state for successful and partial sources
-                successful_sources = self.stats_collector.get_successful_sources()
-                partial_sources = self.stats_collector.get_partial_sources()
-                
-                self.state_store.commit(successful_sources, partial_sources)
-                
-                # Finalize statistics (IMPORTANT: This must happen before output saving)
+                # Finalize statistics
                 final_stats = self.stats_collector.finish()
                 
                 # Prepare output data
@@ -130,8 +126,15 @@ class Pipeline:
                     "stats": final_stats.to_dict()
                 }
                 
-                # Save output to file
+                # Save output to file BEFORE committing state
+                # This prevents watermark advancing if file save fails
                 await self._save_output(output_data)
+                
+                # Commit state only after successful output save
+                successful_sources = self.stats_collector.get_successful_sources()
+                partial_sources = self.stats_collector.get_partial_sources()
+                
+                self.state_store.commit(successful_sources, partial_sources)
                 
                 return output_data
                 

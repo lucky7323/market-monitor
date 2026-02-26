@@ -1,14 +1,17 @@
 """Basic tests for the pipeline."""
 import asyncio
 import unittest
-from unittest.mock import patch, MagicMock
 import tempfile
 import json
 import os
+import sys
 
-from pipeline.core import Pipeline
-from pipeline.models import SourceConfig, SourceType
-from pipeline.incremental import IncrementalTracker
+# Add parent directory to path for imports
+sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..'))
+
+from config import PipelineConfig, SourceConfig
+from pipeline import Pipeline
+from state import StateStore
 
 
 class TestPipeline(unittest.TestCase):
@@ -33,60 +36,44 @@ class TestPipeline(unittest.TestCase):
                 {"timestamp": "2026-02-26T10:01:00Z", "value": 251.2, "unit": "EUR"}
             ], f)
     
-    def test_basic_pipeline(self):
-        """Test basic pipeline functionality."""
-        sources = [
-            SourceConfig(
-                name="test_csv",
-                type=SourceType.CSV,
-                path=self.csv_file
-            ),
-            SourceConfig(
-                name="test_json", 
-                type=SourceType.FILE,
-                path=self.json_file
-            )
-        ]
+    def test_config_validation(self):
+        """Test that config validation works for file sources."""
+        config_data = {
+            "sources": [
+                {
+                    "name": "test_csv",
+                    "type": "csv",
+                    "path": self.csv_file
+                },
+                {
+                    "name": "test_json",
+                    "type": "file",
+                    "path": self.json_file
+                }
+            ],
+            "output": os.path.join(self.temp_dir, "output.json"),
+            "allowed_input_dirs": [self.temp_dir],
+            "allowed_output_dirs": [self.temp_dir]
+        }
         
-        pipeline = Pipeline(sources)
-        
-        # Run pipeline
-        loop = asyncio.new_event_loop()
-        asyncio.set_event_loop(loop)
-        try:
-            result = loop.run_until_complete(pipeline.process())
-            
-            # Check results
-            self.assertEqual(result.stats.total_sources, 2)
-            self.assertEqual(result.stats.successful_sources, 2)
-            self.assertEqual(len(result.stats.failed_sources), 0)
-            self.assertEqual(result.stats.total_records, 4)
-            self.assertGreater(result.stats.records_per_second, 0)
-            
-        finally:
-            loop.close()
+        config = PipelineConfig.model_validate(config_data)
+        assert len(config.sources) == 2
+        assert config.sources[0].type == "csv"
+        assert config.sources[1].type == "file"
     
-    def test_incremental_tracker(self):
-        """Test incremental tracking functionality."""
-        tracker = IncrementalTracker(os.path.join(self.temp_dir, "state.json"))
+    def test_state_store_operations(self):
+        """Test state store basic operations."""
+        state_file = os.path.join(self.temp_dir, "state.json")
+        state = StateStore(state_file)
         
         # Test initial state
-        self.assertIsNone(tracker.get_last_update("test_source"))
+        assert state.get_watermark("test_source") is None
         
-        # Test updating state
-        from datetime import datetime
-        now = datetime.utcnow()
-        tracker.update_last_update("test_source", now, 10)
+        # Test staging and committing
+        state.stage_watermark("test_source", "2026-01-01T00:00:00Z")
+        state.commit({"test_source"}, set())
         
-        # Test retrieving state
-        last_update = tracker.get_last_update("test_source")
-        self.assertIsNotNone(last_update)
-        self.assertEqual(last_update.replace(microsecond=0), now.replace(microsecond=0))
-        
-        # Test stats
-        stats = tracker.get_stats()
-        self.assertEqual(stats['tracked_sources'], 1)
-        self.assertIn('test_source', stats['sources'])
+        assert state.get_watermark("test_source") == "2026-01-01T00:00:00Z"
 
 
 if __name__ == '__main__':

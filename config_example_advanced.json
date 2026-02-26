@@ -5,44 +5,42 @@
       "type": "rest",
       "url": "https://api.coindesk.com/v1/bpi/currentprice.json",
       "timeout": 10.0,
-      "field_mapping": {
-        "price": "bpi.USD.rate_float",
-        "currency": "bpi.USD.code",
-        "description": "bpi.USD.description"
-      }
+      "field_mapping": [
+        {"source_field": "bpi.USD.rate_float", "target_field": "value"},
+        {"source_field": "bpi.USD.code", "target_field": "unit"},
+        {"source_field": "bpi.USD.description", "target_field": "source"}
+      ]
     },
     {
       "name": "exchange_rates",
       "type": "rest", 
       "url": "https://api.exchangerate-api.com/v4/latest/USD",
       "timeout": 15.0,
-      "field_mapping": {
-        "base_currency": "base",
-        "rates": "rates",
-        "last_updated": "date"
-      }
+      "field_mapping": [
+        {"source_field": "base", "target_field": "source"},
+        {"source_field": "date", "target_field": "timestamp"}
+      ]
     },
     {
       "name": "sample_csv_local",
       "type": "csv",
       "path": "./test_data/sample.csv",
       "csv_delimiter": ",",
-      "field_mapping": {
-        "market_value": "value",
-        "market_unit": "unit",
-        "market_source": "source"
-      }
+      "field_mapping": [
+        {"source_field": "value", "target_field": "value"},
+        {"source_field": "unit", "target_field": "unit"},
+        {"source_field": "source", "target_field": "source"}
+      ]
     },
     {
       "name": "jsonplaceholder_users",
       "type": "rest",
       "url": "https://jsonplaceholder.typicode.com/users",
       "timeout": 10.0,
-      "field_mapping": {
-        "user_name": "name",
-        "user_email": "email",
-        "user_city": "address.city"
-      }
+      "field_mapping": [
+        {"source_field": "name", "target_field": "source"},
+        {"source_field": "email", "target_field": "unit"}
+      ]
     },
     {
       "name": "sample_json_file",
